@@ -15,6 +15,11 @@ import { UpdateSurgeryComponent } from './surgery/update-surgery/update-surgery.
 import { ErrorComponent } from './shared/error/error.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SurgeryService } from './services/surgery.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -30,13 +35,19 @@ import { LoginComponent } from './login/login.component';
     UpdateSurgeryComponent,
     ErrorComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    SurgeryService,
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
