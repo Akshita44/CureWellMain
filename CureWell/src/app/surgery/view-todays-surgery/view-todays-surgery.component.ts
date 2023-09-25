@@ -52,4 +52,5 @@ export class ViewTodaysSurgeryComponent implements OnInit {
     return this.datePipe.transform(surgeryDate,"yyyy-MM-dd");
   }
 
+
 }

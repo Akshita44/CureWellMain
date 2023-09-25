@@ -11,7 +11,11 @@ using System.Web.Http.Cors;
 
 namespace SOTI.CureWell.WebAPI.Controllers
 {
+<<<<<<< HEAD
     [EnableCors("*", "*", "*")]
+=======
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+>>>>>>> 33e55a6c1d59838dd8adae203104cbfd0b8893e6
     [RoutePrefix("api/Home")]
     /// <summary>
     /// Controller for handling home-related actions.
