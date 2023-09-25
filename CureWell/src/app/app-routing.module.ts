@@ -24,6 +24,7 @@ const routes: Routes = [
   {path:"doctor/update-doctor/:doctorId",component:UpdateDoctorComponent},
   {path:"surgery/update-surgery",component:UpdateSurgeryComponent},
   {path:"surgery/view-todays-surgery",component:ViewTodaysSurgeryComponent},
+  {path:"surgery/update-surgery/:surgeryId",component:UpdateSurgeryComponent},
   {path:"specialization/view-specialization",component:ViewSpecializationComponent},
   {path:"make-appointment",component:AppointmentComponent},
   {path:"about-us",component:AboutUsComponent},
