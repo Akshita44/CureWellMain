@@ -20,6 +20,51 @@ namespace SOTI.CureWell.DAL
         private DataSet _ds = null;
         public CureWellRepository() { }
 
+        public Surgery GetSurgeryById(int surgeryId)
+        {
+            Surgery surgery = null;
+            try
+            {
+                using (_connection = new SqlConnection(SqlConnectionString.GetConnectionString))
+                {
+                    using (_adapter = new SqlDataAdapter("Select * from Surgery", _connection))
+                    {
+                        using (_ds = new DataSet())
+                        {
+                            _adapter.Fill(_ds, "Surgery");
+                            _adapter.FillSchema(_ds, SchemaType.Source);
+
+                            surgery = _ds.Tables["Surgery"].AsEnumerable()
+                                .Where(p => p.Field<int>("SurgeryId") == surgeryId)
+                                .Select(x => new Surgery
+                            {
+                                SurgeryId = x.Field<int>("SurgeryId"),
+                                DoctorId = x.Field<int>("DoctorId"),
+                                SurgeryDate = x.Field<DateTime>("SurgeryDate"),
+                                StartTime = x.Field<Decimal>("StartTime"),
+                                EndTime = x.Field<decimal>("EndTime"),
+                                SurgeryCategory = x.Field<string>("SurgeryCategory")
+                            }).FirstOrDefault();
+
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return surgery;
+        }
+
         /// <summary>
         /// Retrieves all the doctors from the doctor table
         /// </summary>
@@ -358,11 +403,8 @@ namespace SOTI.CureWell.DAL
 
                         _adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                         _adapter.SelectCommand.Parameters.AddWithValue("@SurgeryId", sObj.SurgeryId);
-                        _adapter.SelectCommand.Parameters.AddWithValue("@DoctorId", sObj.DoctorId);
-                        _adapter.SelectCommand.Parameters.AddWithValue("@SurgeryDate", sObj.SurgeryDate);
                         _adapter.SelectCommand.Parameters.AddWithValue("@StartTime", sObj.StartTime);
                         _adapter.SelectCommand.Parameters.AddWithValue("@EndTime", sObj.EndTime);
-                        _adapter.SelectCommand.Parameters.AddWithValue("@SurgeryCategory", sObj.SurgeryCategory);
                         SqlParameter ret = new SqlParameter() { Direction = ParameterDirection.ReturnValue };
                         _adapter.SelectCommand.Parameters.Add(ret);
 

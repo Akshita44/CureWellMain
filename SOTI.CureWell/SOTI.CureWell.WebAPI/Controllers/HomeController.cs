@@ -7,9 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace SOTI.CureWell.WebAPI.Controllers
 {
+    [EnableCors("*", "*", "*")]
     [RoutePrefix("api/Home")]
     /// <summary>
     /// Controller for handling home-related actions.
@@ -166,6 +168,18 @@ namespace SOTI.CureWell.WebAPI.Controllers
                 return Ok(true);
             }
             return Ok(false);
+        }
+
+        [HttpGet]
+        [Route("GetSurgeryById/{surgeryId}")]
+        public IHttpActionResult GetSurgeryById([FromUri] int surgeryId)
+        {
+            var res = _surgery.GetSurgeryById(surgeryId);
+            if (res == null)
+            {
+                return BadRequest();
+            }
+            return Ok(res);
         }
     }
 
